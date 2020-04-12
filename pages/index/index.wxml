@@ -1,0 +1,27 @@
+<!--index.wxml-->
+<view class="container">
+	<!-- 用户头像等信息展示 -->
+	<view class="userinfo">
+		<button style="width:73px;font-size:10px;padding:5px 0;margin:12px 0;" wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">获取头像昵称</button>
+		<block wx:else>
+			<image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+			<text class="userinfo-nickname">{{userInfo.nickName}}</text>
+		</block>
+	</view>
+
+	<!-- 热门城市天气 -->
+	<picker class="choose-city-picker" mode="selector" range="{{hotCitys}}" value='3' bindchange="onbindchange">
+		<button class="choose-city-btn" size='mini' type='primary'>{{temperatureData['results'][0].location.name || '选择城市'}}</button>
+	</picker>
+
+  <!-- 输入搜索 -->
+  <input class="search-temperature" type="text" value="" placeholder="请输入城市进行查询" bindblur="onBindBlur"></input>
+
+	<!-- 天气信息展示 -->
+	<view class="temperature-box">
+		<text class="temperature-city">{{temperatureData['results'][0].location.name || '请选择/查询城市'}}</text>
+		<image class="temperature-img" src="{{temperatureImg || '../../images/sun.png'}}" mode="aspectFit"></image>
+		<text class="temperature-number">{{temperatureData['results'][0].now.temperature || '--'}}℃</text>
+		<text class="temperature-text">{{temperatureData['results'][0].now.text || '获取失败'}}</text>
+	</view>
+</view>

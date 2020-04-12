@@ -1,0 +1,28 @@
+<!--pages/music.wxml-->
+<view class="music-container">
+	<!-- 音乐搜索框 -->
+	<view class="song-search">
+		<input class="song-search-input" type="text" value="" placeholder="请输入歌手、音乐搜索" bindblur="onBindBlur"></input>
+	</view>
+	<!-- 只是margin -->
+	<view class="just-margin" style="height:60px;width:100%;border-bottom:1px solid #f7f7f7;"></view>
+	<!-- 搜索列表 -->
+	<scroll-view style="background:rgba(255,222,173,.7);padding:10px 0;border-bottom:1px solid #f7f7f7;" wx:for="{{songInfo.song.list}}" wx:key="index" scroll-y="{{true}}">
+		<view class="song-info-box" bindtap="onClickToListen" data-song="{{item}}">
+			<text class="song-name">{{item.songname}}</text>
+			<text class="song-albumname">歌手:{{item.singer[0].name}} 专辑名:{{item.albumname}}</text>
+		</view>
+	</scroll-view>
+
+	<!-- 音乐播放器 -->
+	<view class="music-box">
+		<text wx:if="{{!isPlay}}" class="iconfont icon-bofang" style="color:#d81e06;" bindtap="playSong" data-num="1"></text>
+		<text wx:else class="iconfont icon-zanting" style="color:#d81e06;" bindtap="pauseSong" data-num="2"></text>
+		<text class="music-song-name">{{selectedSongInfo.songname || '歌名'}} - {{selectedSongInfo.singer[0].name || '歌手'}}</text>
+		<text class="start-point">{{currentTime || '00:00'}}</text>
+		<view class="slider-box">
+			<slider block-size="16" value="{{currentValue}}" max="{{allValue}}" bindchange="onBindSliderChange"></slider>
+		</view>
+		<text class="end-point">{{allTime || '00:00'}}</text>
+	</view>
+</view>
